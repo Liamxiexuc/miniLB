@@ -16,14 +16,12 @@
     "esm": "^3.2.25",
     "nanoid": "^3.1.25",
     "next": "latest",
-    "postcss": "^8.3.6",
-    "postcss-preset-env": "^6.7.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "tailwindcss": "^2.2.7"
+    "react-dom": "^17.0.2"
   },
   "browser": {
     "fs": false,
     "path": false
-  }
+  },
+  "proxy": "https://pnwyb0a3p8.execute-api.ap-southeast-2.amazonaws.com"
 }
