@@ -7,6 +7,8 @@ import styles from "./Address.module.css";
 export const Address = ({ visible, setVisible, properties, setProperties }) => {
   const [componentSize, setComponentSize] = useState("default");
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
@@ -43,21 +45,34 @@ export const Address = ({ visible, setVisible, properties, setProperties }) => {
   ];
 
   const onFinish = async (values) => {
-    const {
-      data: { data: addresses },
-    } = await axios.post("/api/address", { ...values });
-
-    const data = addresses.map((i, index) => {
-      const { streetName, streetNumber, streetType, suburb, postcode, gnafId } =
-        i;
-      const address = `${streetNumber} ${streetName} ${streetType}, ${suburb} ${postcode}`;
-      return {
-        address,
-        gnafId,
-        key: nanoid(),
-      };
-    });
-    setData(data);
+    setLoading(true);
+    setError(false);
+    try {
+      const {
+        data: { data: addresses },
+      } = await axios.post("/api/address", { ...values });
+      setLoading(false);
+      const data = addresses.map((i, index) => {
+        const {
+          streetName,
+          streetNumber,
+          streetType,
+          suburb,
+          postcode,
+          gnafId,
+        } = i;
+        const address = `${streetNumber} ${streetName} ${streetType}, ${suburb} ${postcode}`;
+        return {
+          address,
+          gnafId,
+          key: nanoid(),
+        };
+      });
+      setData(data);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,7 +118,9 @@ export const Address = ({ visible, setVisible, properties, setProperties }) => {
             <Input />
           </Form.Item>
           <Form.Item {...tailLayout}>
-            <Button htmlType="submit">Search</Button>
+            <Button loading={loading} htmlType="submit">
+              Search
+            </Button>
           </Form.Item>
         </Form>
         <div>{data && <Table columns={columns} dataSource={data} />}</div>
