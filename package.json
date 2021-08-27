@@ -23,6 +23,5 @@
   "browser": {
     "fs": false,
     "path": false
-  },
-  "proxy": "https://pnwyb0a3p8.execute-api.ap-southeast-2.amazonaws.com"
+  }
 }

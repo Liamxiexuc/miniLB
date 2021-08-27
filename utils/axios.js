@@ -1,7 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL =
-  "https://pnwyb0a3p8.execute-api.ap-southeast-2.amazonaws.com/production";
+axios.defaults.baseURL = "";
 
 export const get = async (url, data) => axios.get(url, data);
 
