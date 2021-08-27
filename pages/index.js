@@ -12,6 +12,7 @@ const content = {
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
+  const [properties, setProperties] = useState([]);
 
   return (
     <div style={content}>
@@ -22,10 +23,10 @@ export default function Home() {
           </a>
         </Link>
 
-        <h1 className="mb-0 mt-3 text-disabled">Tiny Legacy Builder !</h1>
+        <h1 className="mb-0 mt-3 text-disabled">Mini Legacy Builder !</h1>
       </div>
       <div className={styles.content}>
-        <PropertyTable />
+        <PropertyTable properties={properties} setProperties={setProperties} />
         <Button
           className={styles.btn}
           onClick={() => setVisible(true)}
@@ -34,7 +35,12 @@ export default function Home() {
           Add
         </Button>
       </div>
-      <Address visible={visible} setVisible={setVisible} />
+      <Address
+        properties={properties}
+        setProperties={setProperties}
+        visible={visible}
+        setVisible={setVisible}
+      />
     </div>
   );
 }

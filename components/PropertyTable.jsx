@@ -1,82 +1,63 @@
-import { Table, Tag, Space } from 'antd';
+import { Table, Tag, Space } from "antd";
 
-export const PropertyTable = () => {
-
-	const columns = [
+export const PropertyTable = ({ properties, setProperties }) => {
+  const columns = [
     {
       title: "Address",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "address",
+      key: "address",
       render: (text) => <a>{text}</a>,
     },
     {
       title: "Purchase Date",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "purchaseDate",
+      key: "purchaseDate",
     },
     {
-      title: "Purchase",
-      dataIndex: "address",
-      key: "address",
+      title: "Purchase Price",
+      dataIndex: "purchasePrice",
+      key: "purchasePrice",
     },
     {
-      title: "Appraisal",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
+      title: "Appraisal Value",
+      key: "appraisedValue",
+      dataIndex: "appraisedValue",
     },
     {
-      title: "Rent(Weekly)",
-      dataIndex: "age",
-      key: "age",
+      title: "Appraisal Rent",
+      dataIndex: "appraisedRent",
+      key: "appraisedRent",
     },
     {
       title: "Loan (LVR)",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "loanLVR",
+      key: "loanLVR",
     },
     {
       title: "Interest Rate",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "loanRate",
+      key: "loanRate",
     },
     {
       title: "Loan Term",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "loanTerm",
+      key: "loanTerm",
     },
     {
       title: "IO Period",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "loanIO",
+      key: "loanIO",
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
-    },
-	];
-	
-
-	return (
+  return (
     <div>
-      <Table pagination={false} columns={columns} dataSource={data} />
+      <Table
+        pagination={false}
+        columns={columns}
+        dataSource={properties}
+        rowKey="gnafId"
+      />
     </div>
   );
-}
+};
