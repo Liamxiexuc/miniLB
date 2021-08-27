@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Button, Form, Input, Table } from "antd";
+import { Modal, Button, Form, Input, Table, message } from "antd";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import styles from "./Address.module.css";
@@ -15,9 +15,16 @@ export const Address = ({ visible, setVisible, properties, setProperties }) => {
   };
 
   const addProperty = async (gnafId, address) => {
-    const { data: property } = await axios.post(`/api/property/${gnafId}`);
-    setProperties(() => [...properties, { ...property, address, gnafId }]);
-    setVisible(false);
+    message.loading("Action in progress..");
+    try {
+      const { data: property } = await axios.post(`/api/property/${gnafId}`);
+      setProperties(() => [...properties, { ...property, address, gnafId }]);
+      setVisible(false);
+      message.success("Loading finished", 2.5);
+    } catch (error) {
+      setError(error);
+      message.error(`Something error: ${error.message}`, 2.5);
+    }
   };
 
   const tailLayout = {
