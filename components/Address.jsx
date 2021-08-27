@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Modal, Button, Form, Input, Table } from "antd";
 import { nanoid } from "nanoid";
-import { requestAddress } from "../service/address";
-import { requestProperty } from "../service/property";
+import axios from "axios";
 import styles from "./Address.module.css";
 
 export const Address = ({ visible, setVisible, properties, setProperties }) => {
@@ -14,7 +13,7 @@ export const Address = ({ visible, setVisible, properties, setProperties }) => {
   };
 
   const addProperty = async (gnafId, address) => {
-    const property = await requestProperty(gnafId);
+    const { data: property } = await axios.post(`/api/property/${gnafId}`);
     setProperties(() => [...properties, { ...property, address, gnafId }]);
     setVisible(false);
   };
@@ -43,18 +42,11 @@ export const Address = ({ visible, setVisible, properties, setProperties }) => {
     },
   ];
 
-  // const data = [
-  //   {
-  //     key: "1",
-  //     name: "John Brown",
-  //     address: "New York No. 1 Lake Park",
-  //   },
-  // ];
-
   const onFinish = async (values) => {
-    console.log(values);
-    const addresses = await requestAddress(values);
-    console.log(addresses);
+    const {
+      data: { data: addresses },
+    } = await axios.post("/api/address", { ...values });
+
     const data = addresses.map((i, index) => {
       const { streetName, streetNumber, streetType, suburb, postcode, gnafId } =
         i;
